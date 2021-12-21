@@ -201,8 +201,6 @@ void MinesweeperCore::setMineCount()
 		for (int j = 0; j < m_y; j++)
 		{
 			m_board.at(i).at(j).mine_count = countMines(i, j);
-			// TODO: Remove after debug phase
-//			printf("Mine count on cell (%d, %d) = %d\n", i, j, countMines(i, j));
 		}
 	}
 }

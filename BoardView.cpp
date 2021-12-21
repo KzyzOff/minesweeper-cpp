@@ -66,38 +66,50 @@ void BoardView::draw(SDL_Renderer *renderer)
 {
 	for (const auto &cell : m_cells)
 	{
-		switch (cell.cc->state)
-		{
-			case CellState::FLAG:
-				SDL_SetRenderDrawColor(renderer, 114, 232, 157, 255);
-				break;
-			case CellState::REVEALED:
-				SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-				break;
-			case CellState::UNREVEALED:
-				SDL_SetRenderDrawColor(renderer, 72, 122, 176, 255);
-				break;
-			default:
-				SDL_SetRenderDrawColor(renderer, 247, 255, 249, 255);
-				break;
-		}
-		SDL_RenderFillRect(renderer, &cell.rect);
-		if (cell.cc->state == CellState::REVEALED)
-		{
-			std::string count = (cell.cc->mine_count > 0) ? std::to_string(cell.cc->mine_count) : "";
-			m_font_mgr.draw(renderer, cell.getRect().x + m_offset, cell.getRect().y, count);
-		}
-
-		if (cell.cc->state == CellState::FLAG)
-		{
-			const std::string f = "F";
-			m_font_mgr.draw(renderer, cell.getRect().x + m_offset, cell.getRect().y, f);
-		}
+		drawCell(renderer, const_cast<CellView &>(cell));
 	}
+	drawClock(renderer);
+}
+
+void BoardView::drawClock(SDL_Renderer* renderer)
+{
 	Uint64 clock = (m_core.getClock()->isRunning())
-			? m_core.getClock()->fromStart(1000)
-			: m_core.getClock()->duration(1000);
+	               ? m_core.getClock()->fromStart(1000)
+	               : m_core.getClock()->duration(1000);
 	m_font_mgr.draw(renderer, 10, 10, std::to_string(clock));
+}
+
+void BoardView::drawCell(SDL_Renderer* renderer, CellView &cv)
+{
+	bool text_on = false;
+	std::string text;
+	switch (cv.cc->state)
+	{
+		case CellState::FLAG:
+			setRenderColor(renderer, Color::light_green);
+			text = "F";
+			break;
+		case CellState::REVEALED:
+			setRenderColor(renderer, Color::light_gray);
+			text = (cv.cc->mine_count > 0) ? std::to_string(cv.cc->mine_count) : "";
+			break;
+		case CellState::UNREVEALED:
+			setRenderColor(renderer, Color::dark_gray);
+			break;
+		default:
+			break;
+	}
+	SDL_RenderFillRect(renderer, &cv.rect);
+	m_font_mgr.draw(renderer, cv.getRect().x + m_offset, cv.getRect().y, text);
+}
+
+void BoardView::setRenderColor(SDL_Renderer* renderer, SDL_Color color)
+{
+	SDL_SetRenderDrawColor(renderer,
+						   color.r,
+						   color.g,
+						   color.b,
+						   color.a);
 }
 
 void BoardView::handleEvents(SDL_Event &event)

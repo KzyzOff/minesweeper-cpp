@@ -13,7 +13,7 @@ add_executable(${PROJECT_NAME} main.cpp
 #        AppState.h
         Clock.cpp Clock.h
 #        MinesweeperCore1D.cpp MinesweeperCore1D.h
-        )
+        Color.h)
 
 include(FindPkgConfig)
 
