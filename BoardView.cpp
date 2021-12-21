@@ -1,7 +1,7 @@
 
 #include "BoardView.h"
 
-BoardView::BoardView(MinesweeperCore2D &mc, FontManager &fm, int win_w, int win_h)
+BoardView::BoardView(MinesweeperCore &mc, FontManager &fm, int win_w, int win_h)
 : m_core(mc),
   m_font_mgr(fm),
   m_win_size({win_w, win_h}),
@@ -44,7 +44,7 @@ void BoardView::setCells()
 		for (int j = 0; j < m_core.getX(); j++)
 		{
 			x = m_tlc.x + j * (m_cell_size + m_gap);
-			CellView cell(x, y, m_cell_size, m_cell_size);
+			CellView cell(x, y, m_cell_size, m_cell_size, m_core.getCell(j, i));
 			m_cells.push_back(cell);
 		}
 	}
@@ -60,23 +60,13 @@ void BoardView::updateMouse()
 void BoardView::update()
 {
 	updateMouse();
-	Vec2i pos {};
-	for (int i = 0; i < m_cells.size(); i++)
-	{
-		pos = x2xy(i);
-		m_cells.at(i).state =  m_core.getCellState(pos.x, pos.y);
-		if (m_core.getCellState(pos.x, pos.y) == CellState::REVEALED)
-		{
-			m_cells.at(i).mines = m_core.countMines(pos.x, pos.y);
-		}
-	}
 }
 
 void BoardView::draw(SDL_Renderer *renderer)
 {
-	for (auto cell : m_cells)
+	for (const auto &cell : m_cells)
 	{
-		switch (cell.state)
+		switch (cell.cc->state)
 		{
 			case CellState::FLAG:
 				SDL_SetRenderDrawColor(renderer, 114, 232, 157, 255);
@@ -92,13 +82,13 @@ void BoardView::draw(SDL_Renderer *renderer)
 				break;
 		}
 		SDL_RenderFillRect(renderer, &cell.rect);
-		if (cell.state == CellState::REVEALED)
+		if (cell.cc->state == CellState::REVEALED)
 		{
-			std::string count = (cell.mines > 0) ? std::to_string(cell.mines) : "";
+			std::string count = (cell.cc->mine_count > 0) ? std::to_string(cell.cc->mine_count) : "";
 			m_font_mgr.draw(renderer, cell.getRect().x + m_offset, cell.getRect().y, count);
 		}
 
-		if (cell.state == CellState::FLAG)
+		if (cell.cc->state == CellState::FLAG)
 		{
 			const std::string f = "F";
 			m_font_mgr.draw(renderer, cell.getRect().x + m_offset, cell.getRect().y, f);
@@ -122,6 +112,7 @@ void BoardView::handleEvents(SDL_Event &event)
 				{
 					m_lb_flag = true;
 					m_core.reveal(x2xy(i).x, x2xy(i).y);
+					debug_print();
 					return;
 				}
 				if (event.type == SDL_MOUSEBUTTONUP && m_lb_flag)
@@ -169,8 +160,8 @@ void BoardView::debug_print() const
 {
 	for (int i = 0; i < m_cells.size(); i++)
 	{
-		SDL_Rect rect = m_cells.at(i).rect;
-		printf("Cell [%d] = (%d, %d), size = (%d, %d)\n",
-			   i, rect.x, rect.y, rect.w, rect.h);
+//		printf("[View] Cell (%d) state = %d, mine count = %d\n", i, m_cells.at(i).cc->state, m_cells.at(i).cc->mine_count);
+		printf("[View] Cell (%d) state = %d, mine count = %d\n", i, m_core.getCell(x2xy(i).x, x2xy(i).y)->state,
+		       m_core.getCell(x2xy(i).x, x2xy(i).y)->mine_count);
 	}
 }

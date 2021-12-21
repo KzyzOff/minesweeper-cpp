@@ -7,7 +7,7 @@ include_directories("/usr/include/SDL2")
 
 add_executable(${PROJECT_NAME} main.cpp
         App.cpp App.h
-        MinesweeperCore2D.cpp MinesweeperCore2D.h
+        MinesweeperCore.cpp MinesweeperCore.h
         BoardView.cpp BoardView.h
         FontManager.cpp FontManager.h
 #        AppState.h

@@ -1,7 +1,7 @@
 
-#include "MinesweeperCore2D.h"
+#include "MinesweeperCore.h"
 
-MinesweeperCore2D::MinesweeperCore2D(int x, int y, GameDifficulty difficulty)
+MinesweeperCore::MinesweeperCore(int x, int y, GameDifficulty difficulty)
 : m_x(x),
   m_y(y),
   m_difficulty(difficulty),
@@ -13,7 +13,7 @@ MinesweeperCore2D::MinesweeperCore2D(int x, int y, GameDifficulty difficulty)
 	setBoard();
 }
 
-void MinesweeperCore2D::setBoard()
+void MinesweeperCore::setBoard()
 {
 	m_game_state = GameState::RUNNING;
 	m_board.clear();
@@ -51,7 +51,7 @@ void MinesweeperCore2D::setBoard()
 	m_mine_count = int(float(m_x * m_y) * static_cast<float>(m_difficulty) / 100.f);
 }
 
-void MinesweeperCore2D::updateState()
+void MinesweeperCore::updateState()
 {
 	int unrevealed = m_board_size - m_mine_count;
 	for (const auto &column : m_board)
@@ -70,7 +70,7 @@ void MinesweeperCore2D::updateState()
 	}
 }
 
-void MinesweeperCore2D::genMines(int count, int fm_x, int fm_y)
+void MinesweeperCore::genMines(int count, int fm_x, int fm_y)
 {
 	std::srand(std::time(nullptr));
 	int rand_x = std::rand() % m_x;
@@ -90,7 +90,7 @@ void MinesweeperCore2D::genMines(int count, int fm_x, int fm_y)
 	}
 }
 
-bool MinesweeperCore2D::isOutside(int x, int y) const
+bool MinesweeperCore::isOutside(int x, int y) const
 {
 	if (x < 0 || x > m_x - 1) return true;
 	if (y < 0 || y > m_y - 1) return true;
@@ -98,7 +98,7 @@ bool MinesweeperCore2D::isOutside(int x, int y) const
 	return false;
 }
 
-void MinesweeperCore2D::reveal(int x, int y)
+void MinesweeperCore::reveal(int x, int y)
 {
 	if (m_game_state == GameState::FINISHED_LOSS || m_game_state == GameState::FINISHED_WIN) return;
 	if (isOutside(x, y)) return;
@@ -125,10 +125,11 @@ void MinesweeperCore2D::reveal(int x, int y)
 	}
 
 	updateState();
+//	printf("[Core] Cell state on (%d, %d) = %d\n", x, y, m_board.at(x).at(y).state);
 	debug_draw();
 }
 
-void MinesweeperCore2D::toggle_flag(int x, int y)
+void MinesweeperCore::toggle_flag(int x, int y)
 {
 	if (m_game_state == GameState::FINISHED_LOSS || m_game_state == GameState::FINISHED_WIN) return;
 	if (isOutside(x, y)) return;
@@ -140,7 +141,7 @@ void MinesweeperCore2D::toggle_flag(int x, int y)
 		m_board.at(x).at(y).state = CellState::FLAG;
 }
 
-int MinesweeperCore2D::countMines(int x, int y) const
+int MinesweeperCore::countMines(int x, int y) const
 {
 	if (isOutside(x, y) /*|| m_board.at(x).at(y).state == CellState::UNREVEALED*/)
 		return -1;
@@ -159,7 +160,7 @@ int MinesweeperCore2D::countMines(int x, int y) const
 	return count;
 }
 
-void MinesweeperCore2D::floodReveal(int x, int y)
+void MinesweeperCore::floodReveal(int x, int y)
 {
 	if (isOutside(x, y)) return;
 	if (m_board.at(x).at(y).mine || m_board.at(x).at(y).visited) return;
@@ -182,7 +183,7 @@ void MinesweeperCore2D::floodReveal(int x, int y)
 
 }
 
-void MinesweeperCore2D::revealAll()
+void MinesweeperCore::revealAll()
 {
 	for (auto &row : m_board)
 	{
@@ -193,25 +194,25 @@ void MinesweeperCore2D::revealAll()
 	}
 }
 
-void MinesweeperCore2D::setMineCount()
+void MinesweeperCore::setMineCount()
 {
 	for (int i = 0; i < m_x; i++)
 	{
 		for (int j = 0; j < m_y; j++)
 		{
-			m_board.at(i).at(j) .mine_count = countMines(i, j);
+			m_board.at(i).at(j).mine_count = countMines(i, j);
 			// TODO: Remove after debug phase
-			printf("Mine count on cell (%d, %d) = %d\n", i, j, countMines(i, j));
+//			printf("Mine count on cell (%d, %d) = %d\n", i, j, countMines(i, j));
 		}
 	}
 }
 
-CellState MinesweeperCore2D::getCellState(int x, int y) const
+const CoreCell* MinesweeperCore::getCell(int x, int y) const
 {
-	return m_board.at(x).at(y).state;
+	return &m_board.at(x).at(y);
 }
 
-void MinesweeperCore2D::debug_draw() const
+void MinesweeperCore::debug_draw() const
 {
 	for (size_t y = 0; y < m_y; y++)
 	{
@@ -231,7 +232,7 @@ void MinesweeperCore2D::debug_draw() const
 	}
 }
 
-std::shared_ptr<std::vector<std::vector<CoreCell> > > MinesweeperCore2D::getBoard() const
+std::shared_ptr<std::vector<std::vector<CoreCell> > > MinesweeperCore::getBoard() const
 {
 	return std::make_shared<std::vector<std::vector<CoreCell>>>(m_board);
 }

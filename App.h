@@ -27,7 +27,7 @@ private:
 
 	SDL_Window* m_window;
 	SDL_Renderer* m_renderer;
-	MinesweeperCore2D* m_mc;
+	MinesweeperCore* m_mc;
 	FontManager* m_fm;
 	BoardView* m_bv;
 

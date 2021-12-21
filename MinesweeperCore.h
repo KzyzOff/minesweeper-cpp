@@ -1,7 +1,7 @@
 
 
-#ifndef MINESWEEPER_MINESWEEPERCORE2D_H
-#define MINESWEEPER_MINESWEEPERCORE2D_H
+#ifndef MINESWEEPER_MINESWEEPERCORE_H
+#define MINESWEEPER_MINESWEEPERCORE_H
 
 
 #include <iostream>
@@ -26,10 +26,10 @@ struct CoreCell
 	CoreCell() : state(CellState::UNREVEALED), mine(false), visited(false), mine_count(0) {}
 };
 
-class MinesweeperCore2D
+class MinesweeperCore
 {
 public:
-	MinesweeperCore2D(int x, int y, GameDifficulty difficulty = GameDifficulty::DEBUG);
+	MinesweeperCore(int x, int y, GameDifficulty difficulty = GameDifficulty::DEBUG);
 
 	void reveal(int x, int y);
 	void toggle_flag(int x, int y);
@@ -37,7 +37,7 @@ public:
 	int getX() const { return m_x; };
 	int getY() const { return m_y; };
 	GameState getGameState() const { return m_game_state; };
-	CellState getCellState(int x, int y) const;
+	const CoreCell* getCell(int x, int y) const;
 	int countMines(int x, int y) const;
 	std::shared_ptr<Clock> getClock() const { return m_clock; };
 	std::shared_ptr< std::vector< std::vector<CoreCell> > > getBoard() const;
@@ -68,4 +68,4 @@ private:
 };
 
 
-#endif //MINESWEEPER_MINESWEEPERCORE2D_H
+#endif //MINESWEEPER_MINESWEEPERCORE_H
