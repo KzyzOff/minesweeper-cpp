@@ -12,7 +12,6 @@ add_executable(${PROJECT_NAME} main.cpp
         FontManager.cpp FontManager.h
 #        AppState.h
         Clock.cpp Clock.h
-#        MinesweeperCore1D.cpp MinesweeperCore1D.h
         Color.h)
 
 include(FindPkgConfig)
