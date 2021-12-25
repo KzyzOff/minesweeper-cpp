@@ -8,15 +8,15 @@ BoardView::BoardView(MinesweeperCore &mc, FontManager &fm, int win_w, int win_h)
   m_gap(1),
   m_offset(0),
   m_lb_flag(false),
-  m_rb_flag(false),
-  m_font_color({20, 20, 20})
+  m_rb_flag(false)
+//  m_font_color({20, 20, 20})
 {
 	setBoardSizing();
 	setCells();
 	int font_size = m_cell_size - m_cell_size / 10;
 	m_offset = (m_cell_size - font_size) / 2;
 	m_font_mgr.setSize(font_size);
-	m_font_mgr.setColor(m_font_color);
+//	m_font_mgr.setColor(m_font_color);
 //	debug_print();
 }
 
@@ -76,6 +76,7 @@ void BoardView::drawClock(SDL_Renderer* renderer)
 	Uint64 clock = (m_core.getClock()->isRunning())
 	               ? m_core.getClock()->fromStart(1000)
 	               : m_core.getClock()->duration(1000);
+	m_font_mgr.setColor(Color::yellow);
 	m_font_mgr.draw(renderer, 10, 10, std::to_string(clock));
 }
 
@@ -90,8 +91,13 @@ void BoardView::drawCell(SDL_Renderer* renderer, CellView &cv)
 			text = "F";
 			break;
 		case CellState::REVEALED:
-			setRenderColor(renderer, Color::light_gray);
-			text = (cv.cc->mine_count > 0) ? std::to_string(cv.cc->mine_count) : "";
+			if (cv.cc->mine)
+				setRenderColor(renderer, Color::red);
+			else
+			{
+				setRenderColor(renderer, Color::light_gray);
+				text = (cv.cc->mine_count > 0) ? std::to_string(cv.cc->mine_count) : "";
+			}
 			break;
 		case CellState::UNREVEALED:
 			setRenderColor(renderer, Color::dark_gray);
@@ -100,6 +106,7 @@ void BoardView::drawCell(SDL_Renderer* renderer, CellView &cv)
 			break;
 	}
 	SDL_RenderFillRect(renderer, &cv.rect);
+	m_font_mgr.setColor(Color::black);
 	m_font_mgr.draw(renderer, cv.getRect().x + m_offset, cv.getRect().y, text);
 }
 

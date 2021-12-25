@@ -17,6 +17,8 @@ enum class CellState { FLAG, REVEALED, UNREVEALED };
 enum class GameState { RUNNING, FINISHED_LOSS, FINISHED_WIN };
 enum class GameDifficulty { DEBUG, EASY = 15, MEDIUM = 25, HARD = 35 };
 
+// TODO: Stop clock at game win
+
 struct CoreCell
 {
 	CellState state;
