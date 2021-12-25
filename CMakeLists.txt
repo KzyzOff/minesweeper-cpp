@@ -10,9 +10,9 @@ add_executable(${PROJECT_NAME} main.cpp
         MinesweeperCore.cpp MinesweeperCore.h
         BoardView.cpp BoardView.h
         FontManager.cpp FontManager.h
-#        AppState.h
+        AppState.h
         Clock.cpp Clock.h
-        Color.h)
+        Color.h MenuState.cpp MenuState.h)
 
 include(FindPkgConfig)
 

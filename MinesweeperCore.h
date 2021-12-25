@@ -15,7 +15,7 @@
 
 enum class CellState { FLAG, REVEALED, UNREVEALED };
 enum class GameState { RUNNING, FINISHED_LOSS, FINISHED_WIN };
-enum class GameDifficulty { DEBUG, EASY = 15, MEDIUM = 25, HARD = 35 };
+enum class GameDifficulty { DEBUG, EASY = 15, MEDIUM = 20, HARD = 25 };
 
 struct CoreCell
 {

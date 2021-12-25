@@ -10,8 +10,10 @@ class AppState
 public:
 	virtual ~AppState();
 
+	virtual void draw(SDL_Renderer* renderer);
 	virtual void handleEvents(SDL_Event& event);
 	virtual void update();
+
 };
 
 #endif //MINESWEEPER_APPSTATE_H

@@ -39,7 +39,7 @@ App::App(const std::string &title, int x, int y, int width, int height)
 		return;
 	}
 
-	m_mc = new MinesweeperCore(5, 5, GameDifficulty::EASY);
+	m_mc = new MinesweeperCore(8, 8, GameDifficulty::MEDIUM);
 	m_fm = new FontManager("../VCR_OSD_MONO.ttf");
 	m_bv = new BoardView(*m_mc, *m_fm, width, height);
 
