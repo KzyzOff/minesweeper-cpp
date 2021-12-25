@@ -17,10 +17,6 @@ struct Vec2i
 	int y;
 };
 
-// TODO: Make use of one base SDL_Rect, get rid of separate SDL_Rect for every cell on board
-//       Test cases where you can use one SDL_Rect instead of bloating memory with excess SDL_Rect
-// TODO: Debug flag toggling (doesn't seem to work)
-
 struct CellView
 {
 	std::shared_ptr<const CoreCell> cc;
@@ -55,7 +51,6 @@ private:
 
 	MinesweeperCore &m_core;
 	FontManager &m_font_mgr;
-//	SDL_Color m_font_color;
 	std::vector<CellView> m_cells;
 	Vec2i m_win_size;
 	int m_cell_size;

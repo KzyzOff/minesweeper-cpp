@@ -17,8 +17,6 @@ enum class CellState { FLAG, REVEALED, UNREVEALED };
 enum class GameState { RUNNING, FINISHED_LOSS, FINISHED_WIN };
 enum class GameDifficulty { DEBUG, EASY = 15, MEDIUM = 25, HARD = 35 };
 
-// TODO: Stop clock at game win
-
 struct CoreCell
 {
 	CellState state;
@@ -42,7 +40,6 @@ public:
 	const CoreCell* getCell(int x, int y) const;
 	int countMines(int x, int y) const;
 	std::shared_ptr<Clock> getClock() const { return m_clock; };
-	std::shared_ptr< std::vector< std::vector<CoreCell> > > getBoard() const;
 
 	void debug_draw() const;
 

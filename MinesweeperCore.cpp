@@ -67,6 +67,7 @@ void MinesweeperCore::updateState()
 	if (unrevealed == 0)
 	{
 		m_game_state = GameState::FINISHED_WIN;
+		m_clock->stop();
 	}
 }
 
@@ -125,7 +126,6 @@ void MinesweeperCore::reveal(int x, int y)
 	}
 
 	updateState();
-//	printf("[Core] Cell state on (%d, %d) = %d\n", x, y, m_board.at(x).at(y).state);
 	debug_draw();
 }
 
@@ -228,9 +228,4 @@ void MinesweeperCore::debug_draw() const
 		}
 		printf("\n");
 	}
-}
-
-std::shared_ptr<std::vector<std::vector<CoreCell> > > MinesweeperCore::getBoard() const
-{
-	return std::make_shared<std::vector<std::vector<CoreCell>>>(m_board);
 }
