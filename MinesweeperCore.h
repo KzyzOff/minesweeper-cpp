@@ -11,11 +11,12 @@
 #include <ctime>
 #include <memory>
 
+#include "common.h"
 #include "Clock.h"
 
-enum class CellState { FLAG, REVEALED, UNREVEALED };
-enum class GameState { RUNNING, FINISHED_LOSS, FINISHED_WIN };
-enum class GameDifficulty { DEBUG, EASY = 15, MEDIUM = 20, HARD = 25 };
+//enum class CellState { FLAG, REVEALED, UNREVEALED };
+//enum class GameState { RUNNING, FINISHED_LOSS, FINISHED_WIN };
+//enum class GameDifficulty { DEBUG, EASY = 15, MEDIUM = 20, HARD = 25 };
 
 struct CoreCell
 {

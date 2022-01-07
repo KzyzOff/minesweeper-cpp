@@ -11,7 +11,7 @@ add_executable(${PROJECT_NAME} main.cpp
         BoardView.cpp BoardView.h
         FontManager.cpp FontManager.h
         Clock.cpp Clock.h
-        Color.h)
+        Color.h common.h State.h)
 
 include(FindPkgConfig)
 

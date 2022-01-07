@@ -10,12 +10,13 @@
 #include "MinesweeperCore.h"
 #include "FontManager.h"
 #include "Color.h"
+#include "common.h"
 
-struct Vec2i
-{
-	int x;
-	int y;
-};
+//struct Vec2i
+//{
+//	int x;
+//	int y;
+//};
 
 struct CellView
 {
