@@ -6,32 +6,36 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include <iostream>
+#include <memory>
 
+#include "CONSTANTS.h"
+#include "Controller.h"
+#include "BoardController.h"
 #include "BoardView.h"
 #include "FontManager.h"
 
 class App
 {
 public:
-	App(const std::string &title, int x, int y, int width, int height);
-	~App();
+    App(const std::string &title, int x, int y);
+    ~App();
 
-	void run();
+    void run();
 
-	bool running() const { return m_running; };
+    bool running() const { return m_running; };
 
 private:
-	void handleEvents();
-	void update();
-	void render();
+    void handleEvents();
+    void update();
+    void render();
 
-	SDL_Window* m_window;
-	SDL_Renderer* m_renderer;
-	MinesweeperCore* m_mc;
-	FontManager* m_fm;
-	BoardView* m_bv;
+    std::unique_ptr<Controller> m_current;
 
-	bool m_running;
+    SDL_Window* m_window;
+    SDL_Renderer* m_renderer;
+    std::shared_ptr<FontManager> m_fm;
+
+    bool m_running;
 
 };
 

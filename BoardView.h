@@ -6,17 +6,13 @@
 #include <SDL2/SDL_image.h>
 #include <cstdlib>
 #include <utility>
+#include <memory>
 
 #include "MinesweeperCore.h"
 #include "FontManager.h"
 #include "Color.h"
 #include "common.h"
-
-//struct Vec2i
-//{
-//	int x;
-//	int y;
-//};
+#include "CONSTANTS.h"
 
 struct CellView
 {
@@ -30,7 +26,7 @@ struct CellView
 class BoardView
 {
 public:
-	BoardView(MinesweeperCore &mc, FontManager &fm, int win_w, int win_h);
+	BoardView(MinesweeperCore* core, FontManager* font_mgr);
 	~BoardView() = default;
 
 	void update();
@@ -50,10 +46,10 @@ private:
 
 	Vec2i x2xy(int x) const;
 
-	MinesweeperCore &m_core;
-	FontManager &m_font_mgr;
+	std::shared_ptr<MinesweeperCore> m_core;
+	std::shared_ptr<FontManager> m_font_mgr;
 	std::vector<CellView> m_cells;
-	Vec2i m_win_size;
+//	Vec2i m_win_size;
 	int m_cell_size;
 	Vec2i m_tlc;
 	Vec2i m_board_size;
