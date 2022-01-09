@@ -20,6 +20,7 @@
 struct Button
 {
     std::string text;
+    Vec2i text_pos;
     SDL_Rect rect;
     SDL_Color color;
     SDL_Event event;
@@ -37,8 +38,6 @@ public:
     void update() override;
     void init();
 
-    std::string getNextState() const { return m_next; };
-
 private:
     void setButtons();
     void setButtonEvents();
@@ -46,9 +45,7 @@ private:
     std::shared_ptr<FontManager> m_font_mgr;
     Vec2i m_button_size;
     std::vector<Button> m_buttons;
-
     bool m_quit;
-    std::string m_next;
 
 };
 

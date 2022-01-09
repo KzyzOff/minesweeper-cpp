@@ -3,7 +3,7 @@
 
 MainMenu::MainMenu(FontManager* font_mgr)
 : m_font_mgr(font_mgr),
-  m_next("menu"),
+  m_button_size({0, 0}),
   m_quit(false)
 {
     init();
@@ -12,13 +12,17 @@ MainMenu::MainMenu(FontManager* font_mgr)
 void MainMenu::init()
 {
     setButtons();
+    m_quit = false;
 }
 
 void MainMenu::draw(SDL_Renderer* renderer)
 {
+    m_font_mgr->setColor(Color::black);
+    m_font_mgr->setSize(m_button_size.y);
     for (auto& button : m_buttons)
     {
         button.draw(renderer);
+        m_font_mgr->draw(renderer, button.text_pos.x, button.text_pos.y, button.text);
     }
 }
 
@@ -64,6 +68,8 @@ void MainMenu::setButtons()
         win_offset += m_button_size.y + button_offset;
         m_buttons.push_back(b);
         m_buttons.at(i).active = false;
+        m_buttons.at(i).text_pos.x = b.rect.x + b.rect.w / 2 - b.rect.h / 2;
+        m_buttons.at(i).text_pos.y = b.rect.y;
     }
     m_buttons.at(0).color = Color::green;
     m_buttons.at(0).text = "EASY";
