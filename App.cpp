@@ -43,7 +43,6 @@ App::App(const std::string &title, int x, int y)
     IMG_Init(IMG_INIT_PNG);
 
     m_fm = std::make_shared<FontManager>("../VCR_OSD_MONO.ttf");
-//    m_current = std::make_unique<BoardController>(5, 5, GameDifficulty::MEDIUM, m_fm.get());
     m_current = std::make_unique<MainMenu>(m_fm.get());
 
     m_running = true;
@@ -60,7 +59,7 @@ void App::run()
     while (running())
     {
         handleEvents();
-        update();
+        m_current->update();
         render();
     }
 }
@@ -80,21 +79,19 @@ void App::handleEvents()
         if (event.user.data1 == (void*)GameDifficulty::EASY)
         {
             printf("EASY here\n");
+            m_current = initBoard(GameDifficulty::EASY);
         }
         if (event.user.data1 == (void*)GameDifficulty::MEDIUM)
         {
             printf("MEDIUM here\n");
+            m_current = initBoard(GameDifficulty::MEDIUM);
         }
         if (event.user.data1 == (void*)GameDifficulty::HARD)
         {
             printf("HARD here\n");
+            m_current = initBoard(GameDifficulty::HARD);
         }
     }
-}
-
-void App::update()
-{
-    m_current->update();
 }
 
 void App::render()
@@ -105,4 +102,9 @@ void App::render()
 
     SDL_SetRenderDrawColor(m_renderer, Color::black.r, Color::black.g, Color::black.b, Color::black.a);
     SDL_RenderPresent(m_renderer);
+}
+
+std::unique_ptr<Controller> App::initBoard(GameDifficulty diff)
+{
+    return std::make_unique<BoardController>(10, 10, diff, m_fm.get());
 }
