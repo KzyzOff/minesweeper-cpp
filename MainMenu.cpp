@@ -2,7 +2,9 @@
 #include "MainMenu.h"
 
 MainMenu::MainMenu(FontManager* font_mgr)
-: m_font_mgr(font_mgr)
+: m_font_mgr(font_mgr),
+  m_next("menu"),
+  m_quit(false)
 {
     init();
 }
@@ -22,7 +24,18 @@ void MainMenu::draw(SDL_Renderer* renderer)
 
 void MainMenu::handleEvents(SDL_Event &event)
 {
-
+    if (event.button.button == SDL_BUTTON_LEFT)
+    {
+        for (auto& button : m_buttons)
+        {
+            if (button.active && !m_quit)
+            {
+                SDL_PushEvent(&button.event);
+                m_quit = true;
+                break;
+            }
+        }
+    }
 }
 
 void MainMenu::update()
@@ -54,12 +67,40 @@ void MainMenu::setButtons()
     }
     m_buttons.at(0).color = Color::green;
     m_buttons.at(0).text = "EASY";
+
     m_buttons.at(1).color = Color::orange;
     m_buttons.at(1).text = "MEDIUM";
+
     m_buttons.at(2).color = Color::red;
     m_buttons.at(2).text = "HARD";
+
     m_buttons.at(3).color = Color::yellow;
     m_buttons.at(3).text = "QUIT";
+
+    setButtonEvents();
+}
+
+void MainMenu::setButtonEvents()
+{
+    Uint32 ev_num = SDL_RegisterEvents(1);
+    if (ev_num != ((Uint32) - 1))
+    {
+        SDL_Event ev;
+        SDL_memset(&ev, 0, sizeof(ev));
+        ev.type = ev_num;
+        ev.user.code = 1;
+        ev.user.data1 = (void*)GameDifficulty::EASY;
+        m_buttons.at(0).event = ev;
+
+        ev.user.code = 2;
+        ev.user.data1 = (void*)GameDifficulty::MEDIUM;
+        m_buttons.at(1).event = ev;
+
+        ev.user.code = 3;
+        ev.user.data1 = (void*)GameDifficulty::HARD;
+        m_buttons.at(2).event = ev;
+    }
+    m_buttons.at(3).event.type = SDL_QUIT;
 }
 
 void Button::draw(SDL_Renderer* renderer)
@@ -79,11 +120,7 @@ void Button::update()
     Vec2i mouse {};
     SDL_GetMouseState(&mouse.x, &mouse.y);
     if (mouse.x > rect.x && mouse.x < rect.x + rect.w && mouse.y > rect.y && mouse.y < rect.y + rect.h)
-    {
         active = true;
-    }
     else
-    {
         active = false;
-    }
 }

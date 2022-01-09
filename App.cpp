@@ -62,7 +62,6 @@ void App::run()
         handleEvents();
         update();
         render();
-//		SDL_Delay(200);
     }
 }
 
@@ -74,8 +73,22 @@ void App::handleEvents()
         if (event.type == SDL_QUIT || event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
         {
             m_running = false;
+            break;
         }
         m_current->handleEvents(event);
+        // TODO: after choosing difficulty, change current Controller and create appropriate board
+        if (event.user.data1 == (void*)GameDifficulty::EASY)
+        {
+            printf("EASY here\n");
+        }
+        if (event.user.data1 == (void*)GameDifficulty::MEDIUM)
+        {
+            printf("MEDIUM here\n");
+        }
+        if (event.user.data1 == (void*)GameDifficulty::HARD)
+        {
+            printf("HARD here\n");
+        }
     }
 }
 
