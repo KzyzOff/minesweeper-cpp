@@ -15,6 +15,8 @@ public:
 	void setColor(SDL_Color color);
 	void draw(SDL_Renderer* renderer, int x, int y, const std::string &text);
 
+    int getSize() const { return m_size; };
+
 private:
 	int m_size;
 	TTF_Font* m_font;

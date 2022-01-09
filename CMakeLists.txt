@@ -5,7 +5,17 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories("/usr/include/SDL2")
 
+#include(kiss_sdl/CMakeLists.txt)
+#add_library(kiss)
+#add_subdirectory(kiss_sdl)
+
 add_executable(${PROJECT_NAME} main.cpp
+#        kiss_sdl/kiss_sdl.h
+#        kiss_sdl/kiss_widgets.c
+#        kiss_sdl/kiss_posix.c
+#        kiss_sdl/kiss_general.c
+#        kiss_sdl/kiss_draw.c
+
         common.h
         CONSTANTS.h
         App.cpp App.h
@@ -16,7 +26,8 @@ add_executable(${PROJECT_NAME} main.cpp
         Color.h
         Controller.h
         BoardController.cpp BoardController.h
-        kiss_sdl)
+        MainMenu.cpp MainMenu.h
+        )
 
 include(FindPkgConfig)
 
@@ -26,5 +37,3 @@ pkg_search_module(SDL2TTF REQUIRED SDL2_ttf>=2.0.0)
 
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} ${SDL2TTF_LIBRARIES})
-
-add_subdirectory(kiss_sdl)

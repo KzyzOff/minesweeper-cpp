@@ -10,6 +10,7 @@
 
 #include "CONSTANTS.h"
 #include "Controller.h"
+#include "MainMenu.h"
 #include "BoardController.h"
 #include "BoardView.h"
 #include "FontManager.h"

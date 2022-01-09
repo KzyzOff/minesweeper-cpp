@@ -40,16 +40,11 @@ App::App(const std::string &title, int x, int y)
         return;
     }
 
+    IMG_Init(IMG_INIT_PNG);
 
-
-//    m_mc = new MinesweeperCore(8, 8, GameDifficulty::MEDIUM);
     m_fm = std::make_shared<FontManager>("../VCR_OSD_MONO.ttf");
-    m_current = std::make_unique<BoardController>(5, 5, GameDifficulty::MEDIUM, m_fm.get());
-//    m_bv = new BoardView(*m_mc, *m_fm, width, height);
-
-//	m_mc->reveal(0, 2);
-//    m_mc->debug_draw();
-//	m_bv->debug_print();
+//    m_current = std::make_unique<BoardController>(5, 5, GameDifficulty::MEDIUM, m_fm.get());
+    m_current = std::make_unique<MainMenu>(m_fm.get());
 
     m_running = true;
 }
