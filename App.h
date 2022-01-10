@@ -28,7 +28,6 @@ public:
 private:
     void handleEvents();
     void render();
-//    void changeState();
     std::unique_ptr<Controller> initBoard(GameDifficulty diff);
 
     std::unique_ptr<Controller> m_current;

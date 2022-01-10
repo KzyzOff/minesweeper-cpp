@@ -75,7 +75,6 @@ void App::handleEvents()
             break;
         }
         m_current->handleEvents(event);
-        // TODO: after choosing difficulty, change current Controller and create appropriate board
         if (event.user.data1 == (void*)GameDifficulty::EASY)
         {
             printf("EASY here\n");

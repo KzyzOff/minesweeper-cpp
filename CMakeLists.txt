@@ -10,12 +10,6 @@ include_directories("/usr/include/SDL2")
 #add_subdirectory(kiss_sdl)
 
 add_executable(${PROJECT_NAME} main.cpp
-#        kiss_sdl/kiss_sdl.h
-#        kiss_sdl/kiss_widgets.c
-#        kiss_sdl/kiss_posix.c
-#        kiss_sdl/kiss_general.c
-#        kiss_sdl/kiss_draw.c
-
         common.h
         CONSTANTS.h
         App.cpp App.h
@@ -26,8 +20,8 @@ add_executable(${PROJECT_NAME} main.cpp
         Color.h
         Controller.h
         BoardController.cpp BoardController.h
-        MainMenu.cpp MainMenu.h
-        )
+        Button.h Button.cpp
+        MainMenu.cpp MainMenu.h)
 
 include(FindPkgConfig)
 
