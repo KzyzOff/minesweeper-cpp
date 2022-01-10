@@ -10,7 +10,7 @@ MainMenu::MainMenu(FontManager* font_mgr)
 
 void MainMenu::init()
 {
-    setButtons();
+    setMenu();
     m_quit = false;
 }
 
@@ -49,14 +49,32 @@ void MainMenu::update()
     }
 }
 
-void MainMenu::setButtons()
+void MainMenu::setMenu()
 {
     m_buttons.clear();
+
+    setButtonsSizing();
+
+    m_buttons.at(0).setColor(Color::green);
+    m_buttons.at(1).setColor(Color::orange);
+    m_buttons.at(2).setColor(Color::red);
+    m_buttons.at(3).setColor(Color::yellow);
+
+    m_buttons.at(0).setText("EASY");
+    m_buttons.at(1).setText("MEDIUM");
+    m_buttons.at(2).setText("HARD");
+    m_buttons.at(3).setText("QUIT");
+
+    setButtonsEvents();
+}
+
+void MainMenu::setButtonsSizing()
+{
     int win_offset = 40;
     int button_offset = 15;
     Vec2i size {
-        (WINDOW_WIDTH - 2 * win_offset) / 2,
-        (WINDOW_HEIGHT - 2 * win_offset - 3 * button_offset) / 4
+            (WINDOW_WIDTH - 2 * win_offset) / 2,
+            (WINDOW_HEIGHT - 2 * win_offset - 3 * button_offset) / 4
     };
     int tlc_x = WINDOW_WIDTH / 2 - size.x / 2;
     for (int i = 0; i < 4; i++)
@@ -68,12 +86,10 @@ void MainMenu::setButtons()
         win_offset += size.y + button_offset;
         m_buttons.push_back(b);
     }
+}
 
-    m_buttons.at(0).setColor(Color::green);
-    m_buttons.at(1).setColor(Color::orange);
-    m_buttons.at(2).setColor(Color::red);
-    m_buttons.at(3).setColor(Color::yellow);
-
+void MainMenu::setButtonsEvents()
+{
     Uint32 ev_num = SDL_RegisterEvents(1);
     if (ev_num != (Uint32) - 1)
     {
@@ -82,18 +98,14 @@ void MainMenu::setButtons()
         event.type = ev_num;
         event.user.data1 = (void*)GameDifficulty::EASY;
         m_buttons.at(0).setEvent(event);
-        m_buttons.at(0).setText("EASY");
 
         event.user.data1 = (void*)GameDifficulty::MEDIUM;
         m_buttons.at(1).setEvent(event);
-        m_buttons.at(1).setText("MEDIUM");
 
         event.user.data1 = (void*)GameDifficulty::HARD;
         m_buttons.at(2).setEvent(event);
-        m_buttons.at(2).setText("HARD");
 
         event.type = SDL_QUIT;
         m_buttons.at(3).setEvent(event);
-        m_buttons.at(3).setText("QUIT");
     }
 }

@@ -12,6 +12,8 @@
 #include "MinesweeperCore.h"
 #include "BoardView.h"
 
+// TODO: Add pause button (need to add new mechanics in MinesweeperCore and BoardView classes)
+
 class BoardController : public Controller
 {
 public:

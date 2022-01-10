@@ -23,7 +23,9 @@ public:
     void init();
 
 private:
-    void setButtons();
+    void setMenu();
+    void setButtonsSizing();
+    void setButtonsEvents();
 
     std::shared_ptr<FontManager> m_font_mgr;
     std::vector<Button> m_buttons;
