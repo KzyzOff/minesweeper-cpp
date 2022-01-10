@@ -26,6 +26,7 @@ private:
     void setMenu();
     void setButtonsSizing();
     void setButtonsEvents();
+    void centerTextOnButtons();
 
     std::shared_ptr<FontManager> m_font_mgr;
     std::vector<Button> m_buttons;

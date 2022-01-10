@@ -5,10 +5,6 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories("/usr/include/SDL2")
 
-#include(kiss_sdl/CMakeLists.txt)
-#add_library(kiss)
-#add_subdirectory(kiss_sdl)
-
 add_executable(${PROJECT_NAME} main.cpp
         common.h
         CONSTANTS.h

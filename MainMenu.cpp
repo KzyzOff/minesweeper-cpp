@@ -54,7 +54,6 @@ void MainMenu::setMenu()
     m_buttons.clear();
 
     setButtonsSizing();
-
     m_buttons.at(0).setColor(Color::green);
     m_buttons.at(1).setColor(Color::orange);
     m_buttons.at(2).setColor(Color::red);
@@ -65,6 +64,7 @@ void MainMenu::setMenu()
     m_buttons.at(2).setText("HARD");
     m_buttons.at(3).setText("QUIT");
 
+    centerTextOnButtons();
     setButtonsEvents();
 }
 
@@ -73,7 +73,7 @@ void MainMenu::setButtonsSizing()
     int win_offset = 40;
     int button_offset = 15;
     Vec2i size {
-            (WINDOW_WIDTH - 2 * win_offset) / 2,
+            (WINDOW_WIDTH - 2 * win_offset) * 2 / 3,
             (WINDOW_HEIGHT - 2 * win_offset - 3 * button_offset) / 4
     };
     int tlc_x = WINDOW_WIDTH / 2 - size.x / 2;
@@ -83,8 +83,20 @@ void MainMenu::setButtonsSizing()
         b.setRect({tlc_x, win_offset, size.x, size.y});
         b.setOutlineColor(Color::white);
         b.setTextColor(Color::black);
+        b.setTextSize(b.getRect().h * 2 / 3);
         win_offset += size.y + button_offset;
         m_buttons.push_back(b);
+    }
+}
+
+void MainMenu::centerTextOnButtons()
+{
+    for (auto& b : m_buttons)
+    {
+        b.setTextPos({
+            b.getRect().x + b.getRect().w / 2 - (int)b.getText().size() * b.getFontSize() / 2,
+            b.getRect().y + b.getRect().h / 2 - b.getFontSize() / 2
+        });
     }
 }
 

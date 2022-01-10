@@ -29,7 +29,7 @@ void FontManager::draw(SDL_Renderer *renderer, int x, int y, const std::string &
 	SDL_Rect rect;
 	rect.x = x;
 	rect.y = y;
-	rect.w = m_size;
+    rect.w = m_size * (int)text.size();
 	rect.h = m_size;
 
 	SDL_RenderCopy(renderer, texture, nullptr, &rect);

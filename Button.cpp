@@ -9,6 +9,7 @@ Button::Button(FontManager* font_mgr)
   m_text_color(Color::black),
   m_rect({0, 0, 10, 10}),
   m_text_pos({ 5, 5 }),
+  m_text_size(5),
   m_event()
 {
 
@@ -26,14 +27,15 @@ void Button::drawRect(SDL_Renderer *renderer)
     SDL_RenderFillRect(renderer, &m_rect);
     if (m_active)
     {
-        SDL_SetRenderDrawColor(renderer, m_outline_color.r, m_outline_color.g, m_outline_color.b, m_outline_color.a);
+        SDL_SetRenderDrawColor(renderer, m_outline_color.r, m_outline_color.g,
+                               m_outline_color.b, m_outline_color.a);
         SDL_RenderDrawRect(renderer, &m_rect);
     }
 }
 
 void Button::drawText(SDL_Renderer *renderer)
 {
-    m_font_mgr->setSize(m_rect.h);
+    m_font_mgr->setSize(m_text_size);
     m_font_mgr->setColor(m_text_color);
     m_font_mgr->draw(renderer, m_text_pos.x, m_text_pos.y, m_text);
 }
@@ -41,9 +43,7 @@ void Button::drawText(SDL_Renderer *renderer)
 void Button::update(const Vec2i& mouse_pos)
 {
     if (intersects(mouse_pos))
-    {
         m_active = true;
-    }
     else
         m_active = false;
 }
@@ -69,10 +69,4 @@ void Button::setRect(SDL_Rect rect)
 {
     setPosition({rect.x, rect.y});
     setSize({rect.w, rect.h});
-    setTextPos({ rect.x + rect.w / 2 - rect.h / 2, rect.y });
-}
-
-void Button::setTextPos(Vec2i pos)
-{
-    m_text_pos = pos;
 }

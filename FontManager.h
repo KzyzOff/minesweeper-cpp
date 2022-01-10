@@ -6,6 +6,8 @@
 #include <SDL2/SDL_ttf.h>
 #include <string>
 
+#include "common.h"
+
 class FontManager
 {
 public:
