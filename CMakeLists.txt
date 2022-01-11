@@ -2,8 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 project(Minesweeper)
 
 set(CMAKE_CXX_STANDARD 14)
-
-include_directories("/usr/include/SDL2")
+add_compile_options(-Wall -Wextra)
 
 add_executable(${PROJECT_NAME} main.cpp
         common.h

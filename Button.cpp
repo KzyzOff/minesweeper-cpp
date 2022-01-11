@@ -3,14 +3,15 @@
 
 Button::Button(FontManager* font_mgr)
 : m_font_mgr(font_mgr),
-  m_active(false),
+  m_text(),
+  m_text_pos({ 5, 5 }),
+  m_text_size(5),
+  m_rect({0, 0, 10, 10}),
   m_color(Color::white),
   m_outline_color(Color::orange),
   m_text_color(Color::black),
-  m_rect({0, 0, 10, 10}),
-  m_text_pos({ 5, 5 }),
-  m_text_size(5),
-  m_event()
+  m_event(),
+  m_active(false)
 {
 
 }

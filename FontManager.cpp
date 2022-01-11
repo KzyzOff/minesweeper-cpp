@@ -3,7 +3,7 @@
 
 FontManager::FontManager(const std::string &file)
 : m_size(10),
-  m_color({255, 255, 255})
+  m_color({255, 255, 255, 255})
 {
 	if (TTF_Init() != -1)
 	{

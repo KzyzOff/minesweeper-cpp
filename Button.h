@@ -12,6 +12,9 @@
 #include "common.h"
 #include "FontManager.h"
 
+// TODO: Try to decouple this bloated class (possible solution is to use Builder design pattern)
+// https://refactoring.guru/pl/design-patterns/builder
+
 class Button
 {
 public:
@@ -33,7 +36,6 @@ public:
     void setTextColor(SDL_Color color) { m_text_color = color; };
 
     bool intersects(const Vec2i& p) const;
-    SDL_Event getEvent() const { return m_event; };
     SDL_Rect getRect() const { return m_rect; };
     std::string getText() const { return m_text; };
     int getFontSize() const { return m_text_size; };

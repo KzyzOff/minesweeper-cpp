@@ -83,7 +83,7 @@ void MainMenu::setButtonsSizing()
         b.setRect({tlc_x, win_offset, size.x, size.y});
         b.setOutlineColor(Color::white);
         b.setTextColor(Color::black);
-        b.setTextSize(b.getRect().h * 2 / 3);
+        b.setTextSize(b.getRect().h / 2);
         win_offset += size.y + button_offset;
         m_buttons.push_back(b);
     }
