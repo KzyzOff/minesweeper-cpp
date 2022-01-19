@@ -14,11 +14,14 @@
 #include "common.h"
 #include "CONSTANTS.h"
 
+// TODO: Add restart button
+// TODO: Add pause button
+
 struct CellView
 {
 	std::shared_ptr<const CoreCell> cc;
 	SDL_Rect rect;
-	CellView(int x, int y, int w, int h, const CoreCell* cc) : rect({x, y, w, h}), cc(cc) {}
+	CellView(int x, int y, int w, int h, const CoreCell* cc) : cc(cc), rect({x, y, w, h}) {}
 	SDL_Rect getRect() const { return rect; }
 	bool intersects(Vec2i mouse) const;
 };
@@ -40,6 +43,7 @@ private:
 	void setBoardSizing();
 	void setCells();
 	void updateMouse();
+    void updateClock();
 	void drawClock(SDL_Renderer* renderer);
 	void drawCell(SDL_Renderer* renderer, CellView &cv);
 	static void setRenderColor(SDL_Renderer* renderer, SDL_Color color);
@@ -49,17 +53,17 @@ private:
 	std::shared_ptr<MinesweeperCore> m_core;
 	std::shared_ptr<FontManager> m_font_mgr;
 	std::vector<CellView> m_cells;
-//	Vec2i m_win_size;
 	int m_cell_size;
 	Vec2i m_tlc;
 	Vec2i m_board_size;
 	int m_gap;
 	int m_offset;
+    Vec2i m_clock_pos;
+    Vec2i m_clock_size;
+    Uint64 m_timer;
 	Vec2i m_mouse;
-	// Mouse button flags
 	bool m_lb_flag;
 	bool m_rb_flag;
-	Uint32 m_mouse_buttons;
 
 };
 

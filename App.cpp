@@ -2,9 +2,9 @@
 #include "App.h"
 
 App::App(const std::string &title, int x, int y)
-: m_window(nullptr),
+: m_current(nullptr),
+  m_window(nullptr),
   m_renderer(nullptr),
-  m_current(nullptr),
   m_running(false)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
@@ -42,7 +42,7 @@ App::App(const std::string &title, int x, int y)
 
     IMG_Init(IMG_INIT_PNG);
 
-    m_fm = std::make_shared<FontManager>("../VCR_OSD_MONO.ttf");
+    m_fm = std::make_shared<FontManager>("../assets/VCR_OSD_MONO.ttf");
     m_current = std::make_unique<MainMenu>(m_fm.get());
 
     m_running = true;
