@@ -10,6 +10,7 @@ class Clock
 public:
 	Clock();
 
+    void init();
 	void start();
 	void stop();
 	Uint64 fromStart(Uint64 divider = 1) const;

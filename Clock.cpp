@@ -2,10 +2,16 @@
 #include "Clock.h"
 
 Clock::Clock()
-: m_start_timestamp(0),
-  m_duration(0),
-  m_running(false)
-{}
+{
+    init();
+}
+
+void Clock::init()
+{
+    m_running = false;
+    m_duration = 0;
+    m_start_timestamp = 0;
+}
 
 void Clock::start()
 {

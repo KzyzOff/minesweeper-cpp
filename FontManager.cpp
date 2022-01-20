@@ -2,7 +2,7 @@
 #include "FontManager.h"
 
 FontManager::FontManager(const std::string &file)
-: m_size(100),
+: m_size(80),
   m_color({255, 255, 255, 255})
 {
 	if (TTF_Init() != -1)

@@ -77,18 +77,23 @@ void App::handleEvents()
         m_current->handleEvents(event);
         if (event.user.data1 == (void*)GameDifficulty::EASY)
         {
-            printf("EASY here\n");
+            printf("Initializing EASY board.\n");
             m_current = initBoard(GameDifficulty::EASY);
         }
         if (event.user.data1 == (void*)GameDifficulty::MEDIUM)
         {
-            printf("MEDIUM here\n");
+            printf("Initializing MEDIUM board.\n");
             m_current = initBoard(GameDifficulty::MEDIUM);
         }
         if (event.user.data1 == (void*)GameDifficulty::HARD)
         {
-            printf("HARD here\n");
+            printf("Initializing HARD board.\n");
             m_current = initBoard(GameDifficulty::HARD);
+        }
+        if (event.user.data1 == (void*)CustomEvent::RESET)
+        {
+//            resetBoard();
+            printf("It's a reset! User code of this event is: %d\n", event.user.code);
         }
     }
 }

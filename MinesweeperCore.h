@@ -41,7 +41,7 @@ public:
 	void debug_draw() const;
 
 private:
-	void setBoard();
+	void init();
 	void updateState();
 	void genMines(int count, int fm_x, int fm_y);
 	void floodReveal(int x, int y);

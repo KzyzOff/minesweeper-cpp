@@ -23,7 +23,7 @@ public:
     void handleEvents(SDL_Event& event) override;
     void update() override;
 
-    void init(int x, int y, GameDifficulty diff);
+    void setBoard(int x, int y, GameDifficulty diff);
 
 private:
     std::shared_ptr<FontManager> m_font_mgr;

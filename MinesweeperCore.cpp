@@ -2,18 +2,17 @@
 #include "MinesweeperCore.h"
 
 MinesweeperCore::MinesweeperCore(int x, int y, GameDifficulty difficulty)
-: m_x(x),
-  m_y(y),
-  m_difficulty(difficulty),
-  m_game_state(GameState::RUNNING),
+: m_difficulty(difficulty),
   m_first_move(true),
+  m_x(x),
+  m_y(y),
   m_mine_count(0),
   m_clock(std::make_shared<Clock>())
 {
-	setBoard();
+	init();
 }
 
-void MinesweeperCore::setBoard()
+void MinesweeperCore::init()
 {
 	m_game_state = GameState::RUNNING;
 	m_board.clear();
