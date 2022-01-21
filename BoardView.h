@@ -2,8 +2,7 @@
 #ifndef MINESWEEPER_BOARDVIEW_H
 #define MINESWEEPER_BOARDVIEW_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include "header.h"
 #include <cstdlib>
 #include <utility>
 #include <memory>

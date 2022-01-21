@@ -3,7 +3,7 @@
 #define MINESWEEPER_APP_H
 
 
-#include <SDL2/SDL.h>
+#include "header.h"
 #include <string>
 #include <iostream>
 #include <memory>

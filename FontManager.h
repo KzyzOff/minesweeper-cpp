@@ -3,7 +3,7 @@
 #define MINESWEEPER_FONTMANAGER_H
 
 
-#include <SDL2/SDL_ttf.h>
+#include "header.h"
 #include <string>
 
 #include "common.h"

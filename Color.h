@@ -3,7 +3,7 @@
 #define MINESWEEPER_COLOR_H
 
 
-#include <SDL2/SDL.h>
+#include "header.h"
 
 namespace Color
 {

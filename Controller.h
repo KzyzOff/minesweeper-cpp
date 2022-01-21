@@ -3,7 +3,7 @@
 #define MINESWEEPER_CONTROLLER_H
 
 
-#include <SDL2/SDL.h>
+#include "header.h"
 
 class Controller
 {

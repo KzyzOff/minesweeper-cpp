@@ -3,7 +3,7 @@
 #define MINESWEEPER_BUTTON_H
 
 
-#include <SDL2/SDL.h>
+#include "header.h"
 #include <string>
 #include <memory>
 #include <utility>
