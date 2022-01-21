@@ -74,6 +74,7 @@ void BoardView::setResetButton()
         event.type = ev_num;
         event.user.data1 = (void*)CustomEvent::RESET;
         m_reset_button.setEvent(event);
+//        printf("User event data1 = %i", event.user.data1);
     }
 }
 
@@ -206,8 +207,17 @@ void BoardView::handleEvents(SDL_Event &event)
 	}
     if (event.button.button == SDL_BUTTON_LEFT)
     {
-        if (m_reset_button.isActive() && m_reset_button.intersects(m_mouse))
+        if (event.type == SDL_MOUSEBUTTONDOWN && !m_lb_flag && m_reset_button.isActive())
+        {
+            m_rb_flag = true;
             m_reset_button.onEvent();
+            return;
+        }
+        if (event.type == SDL_MOUSEBUTTONUP && m_rb_flag)
+        {
+            m_rb_flag = false;
+            return;
+        }
     }
 }
 

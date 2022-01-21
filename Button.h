@@ -21,7 +21,7 @@ public:
     explicit Button(FontManager* font_mgr);
 
     void draw(SDL_Renderer* renderer);
-    void update(const Vec2i& mouse);
+    void update(const Vec2i mouse);
     void onEvent() { SDL_PushEvent(&m_event); };
 
     void setSize(Vec2i size);

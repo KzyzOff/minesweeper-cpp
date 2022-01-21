@@ -5,6 +5,8 @@
 
 #include "header.h"
 
+#include "common.h"
+
 class Controller
 {
 public:

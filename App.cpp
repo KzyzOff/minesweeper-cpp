@@ -66,6 +66,8 @@ void App::run()
 
 void App::handleEvents()
 {
+    SDL_PumpEvents();
+
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
@@ -79,21 +81,24 @@ void App::handleEvents()
         {
             printf("Initializing EASY board.\n");
             m_current = initBoard(GameDifficulty::EASY);
+            break;
         }
         if (event.user.data1 == (void*)GameDifficulty::MEDIUM)
         {
             printf("Initializing MEDIUM board.\n");
             m_current = initBoard(GameDifficulty::MEDIUM);
+            break;
         }
         if (event.user.data1 == (void*)GameDifficulty::HARD)
         {
-            printf("Initializing HARD board.\n");
+            printf("Initializing HARD board. Event user data = %d\n", event.user.data1);
             m_current = initBoard(GameDifficulty::HARD);
+            break;
         }
         if (event.user.data1 == (void*)CustomEvent::RESET)
         {
 //            resetBoard();
-            printf("It's a reset! User code of this event is: %d\n", event.user.code);
+            printf("It's a reset! User data1 of this event is: %d\n", event.user.data1);
         }
     }
 }

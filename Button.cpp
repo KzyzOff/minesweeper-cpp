@@ -41,7 +41,7 @@ void Button::drawText(SDL_Renderer *renderer)
     m_font_mgr->draw(renderer, m_text_pos.x, m_text_pos.y, m_text);
 }
 
-void Button::update(const Vec2i& mouse_pos)
+void Button::update(const Vec2i mouse_pos)
 {
     if (intersects(mouse_pos))
         m_active = true;
