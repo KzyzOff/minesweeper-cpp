@@ -17,6 +17,7 @@ namespace Color
     constexpr SDL_Color black = {0, 0, 0, 255};
     constexpr SDL_Color orange = {245, 163, 39, 255};
     constexpr SDL_Color white = { 255, 255, 255, 0 };
+    constexpr SDL_Color light_blue = {67, 168, 250, 255};
 }
 
 

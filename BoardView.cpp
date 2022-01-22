@@ -5,6 +5,7 @@ BoardView::BoardView(MinesweeperCore* core, FontManager* font_mgr)
 : m_core(core),
   m_font_mgr(font_mgr),
   m_reset_button(m_font_mgr.get()),
+  m_pause_button(m_font_mgr.get()),
   m_gap(1),
   m_offset(0),
   m_lb_flag(false),
@@ -16,6 +17,7 @@ BoardView::BoardView(MinesweeperCore* core, FontManager* font_mgr)
 	m_offset = (m_cell_size - font_size) / 2;
 	m_font_mgr->setSize(font_size);
     setResetButton();
+    setPauseButton();
 }
 
 void BoardView::setBoardSizing()
@@ -74,13 +76,33 @@ void BoardView::setResetButton()
         event.type = ev_num;
         event.user.data1 = (void*)CustomEvent::RESET;
         m_reset_button.setEvent(event);
-//        printf("User event data1 = %i", event.user.data1);
     }
 }
 
 void BoardView::setPauseButton()
 {
-
+    m_pause_button.setRect({
+        m_reset_button.getRect().x, m_reset_button.getRect().y + m_reset_button.getRect().h + m_offset,
+        m_reset_button.getRect().w, m_reset_button.getRect().h
+    });
+    m_pause_button.setOutlineColor(Color::white);
+    m_pause_button.setTextColor(Color::black);
+    m_pause_button.setText("Pause");
+    m_pause_button.setColor(Color::light_blue);
+    m_pause_button.setTextSize(m_pause_button.getRect().w / (int)m_pause_button.getText().size());
+    m_pause_button.setTextPos({
+        m_pause_button.getRect().x,
+        m_pause_button.getRect().y + m_pause_button.getRect().h / 2 - m_pause_button.getFontSize() / 2
+    });
+    Uint32 ev_num = SDL_RegisterEvents(1);
+    if (ev_num != (Uint32) - 1)
+    {
+        SDL_Event event;
+        SDL_memset(&event, 0, sizeof(event));
+        event.type = ev_num;
+        event.user.data1 = (void*)CustomEvent::PAUSE;
+        m_pause_button.setEvent(event);
+    }
 }
 
 void BoardView::updateMouse()
@@ -97,6 +119,7 @@ void BoardView::updateClock()
 void BoardView::updateButtons()
 {
     m_reset_button.update(m_mouse);
+    m_pause_button.update(m_mouse);
 }
 
 void BoardView::update()
@@ -156,6 +179,7 @@ void BoardView::drawCell(SDL_Renderer* renderer, CellView &cv)
 void BoardView::drawButtons(SDL_Renderer *renderer)
 {
     m_reset_button.draw(renderer);
+    m_pause_button.draw(renderer);
 }
 
 void BoardView::setRenderColor(SDL_Renderer* renderer, SDL_Color color)
@@ -167,6 +191,7 @@ void BoardView::setRenderColor(SDL_Renderer* renderer, SDL_Color color)
 						   color.a);
 }
 
+// TODO: Decouple this method into smaller ones (for eg. make buttonUp() and buttonDown())
 void BoardView::handleEvents(SDL_Event &event)
 {
 	for (int i = 0; i < int(m_cells.size()); i++)
@@ -209,6 +234,20 @@ void BoardView::handleEvents(SDL_Event &event)
         {
             m_rb_flag = true;
             m_reset_button.onEvent();
+            return;
+        }
+        if (event.type == SDL_MOUSEBUTTONUP && m_rb_flag)
+        {
+            m_rb_flag = false;
+            return;
+        }
+    }
+    if (event.button.button == SDL_BUTTON_LEFT)
+    {
+        if (event.type == SDL_MOUSEBUTTONDOWN && !m_lb_flag && m_pause_button.isActive())
+        {
+            m_rb_flag = true;
+            m_pause_button.onEvent();
             return;
         }
         if (event.type == SDL_MOUSEBUTTONUP && m_rb_flag)

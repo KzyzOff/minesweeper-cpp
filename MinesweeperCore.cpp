@@ -2,13 +2,12 @@
 #include "MinesweeperCore.h"
 
 MinesweeperCore::MinesweeperCore(int x, int y, GameDifficulty difficulty)
-: m_game_state(GameState::RUNNING),
-  m_difficulty(difficulty),
-  m_first_move(true),
+: m_difficulty(difficulty),
   m_x(x),
   m_y(y),
+  m_board_size(m_x * m_y),
   m_mine_count(0),
-  m_clock(std::make_shared<Clock>())
+  m_clock(nullptr)
 {
 	init();
 }
@@ -17,35 +16,14 @@ void MinesweeperCore::init()
 {
 	m_game_state = GameState::RUNNING;
 	m_board.clear();
+    m_clock = std::make_shared<Clock>();
+    m_first_move = true;
 
-	int dbg_x = 3, dbg_y = 3;
-
-	m_board.resize((m_difficulty == GameDifficulty::DEBUG) ? dbg_x : m_x);
+	m_board.resize(m_x);
 	for (auto &i : m_board)
 	{
-		i.resize((m_difficulty == GameDifficulty::DEBUG) ? dbg_y : m_y);
+		i.resize(m_y);
 		fill(i.begin(), i.end(), CoreCell());
-	}
-
-	m_board_size = int(m_board.size() * m_board.at(0).size());
-	// DEBUG ONLY
-	if (m_difficulty == GameDifficulty::DEBUG)
-	{
-		m_x = dbg_x;
-		m_y = dbg_y;
-		m_board.at(0).at(0).mine = true;
-		m_board.at(0).at(1).mine = true;
-		m_board.at(0).at(2).state = CellState::UNREVEALED;
-		m_board.at(1).at(0).state = CellState::REVEALED;
-		m_board.at(1).at(1).mine = true;
-		m_board.at(1).at(2).state = CellState::UNREVEALED;
-		m_board.at(2).at(0).state = CellState::REVEALED;
-		m_board.at(2).at(1).state = CellState::REVEALED;
-
-		m_mine_count = 3;
-//		m_first_move = false;
-
-		return;
 	}
 
 	m_mine_count = int(float(m_x * m_y) * static_cast<float>(m_difficulty) / 100.f);

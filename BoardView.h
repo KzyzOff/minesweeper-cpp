@@ -14,8 +14,8 @@
 #include "common.h"
 #include "CONSTANTS.h"
 
-// TODO: Add restart button
 // TODO: Add pause button
+// TODO: ## NEED REPAIR - board view is broken after a reset
 
 struct CellView
 {
@@ -35,7 +35,6 @@ public:
 	void update();
 	void draw(SDL_Renderer *renderer);
 	void handleEvents(SDL_Event &event);
-
 
 	void debug_print() const;
 
@@ -58,7 +57,7 @@ private:
 	std::shared_ptr<FontManager> m_font_mgr;
 	std::vector<CellView> m_cells;
     Button m_reset_button;
-//    Button m_pause_button;
+    Button m_pause_button;
 	int m_cell_size;
 	Vec2i m_tlc;
 	Vec2i m_board_size;

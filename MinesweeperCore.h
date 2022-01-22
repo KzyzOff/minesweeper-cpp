@@ -14,8 +14,6 @@
 #include "common.h"
 #include "Clock.h"
 
-// TODO: Add reset mechanics
-
 struct CoreCell
 {
 	CellState state;
@@ -28,24 +26,26 @@ struct CoreCell
 class MinesweeperCore
 {
 public:
-	MinesweeperCore(int x, int y, GameDifficulty difficulty = GameDifficulty::DEBUG);
+	MinesweeperCore(int x, int y, GameDifficulty difficulty);
 
-	void reveal(int x, int y);
-	void toggle_flag(int x, int y);
+    void init();
+
+    void reveal(int x, int y);
+    void toggle_flag(int x, int y);
+
     void togglePause();
+    int getX() const { return m_x; };
+    int getY() const { return m_y; };
+    GameState getGameState() const { return m_game_state; };
+    const CoreCell* getCell(int x, int y) const;
+    int countMines(int x, int y) const;
 
-	int getX() const { return m_x; };
-	int getY() const { return m_y; };
-	GameState getGameState() const { return m_game_state; };
-	const CoreCell* getCell(int x, int y) const;
-	int countMines(int x, int y) const;
 	std::shared_ptr<Clock> getClock() const { return m_clock; };
 
 	void debug_draw() const;
 
 private:
-	void init();
-	void updateState();
+    void updateState();
 	void genMines(int count, int fm_x, int fm_y);
 	void floodReveal(int x, int y);
 	void revealAll();
