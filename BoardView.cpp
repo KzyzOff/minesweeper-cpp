@@ -91,9 +91,7 @@ void BoardView::updateMouse()
 
 void BoardView::updateClock()
 {
-    m_timer = (m_core->getClock()->isRunning())
-              ? m_core->getClock()->fromStart(1000)
-              : m_core->getClock()->duration(1000);
+    m_timer = m_core->getClock()->duration(1000);
 }
 
 void BoardView::updateButtons()
