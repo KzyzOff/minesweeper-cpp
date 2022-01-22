@@ -14,6 +14,8 @@
 #include "common.h"
 #include "Clock.h"
 
+// TODO: Add reset mechanics
+
 struct CoreCell
 {
 	CellState state;
@@ -30,6 +32,7 @@ public:
 
 	void reveal(int x, int y);
 	void toggle_flag(int x, int y);
+    void togglePause();
 
 	int getX() const { return m_x; };
 	int getY() const { return m_y; };

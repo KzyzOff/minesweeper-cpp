@@ -17,6 +17,11 @@ void BoardController::draw(SDL_Renderer *renderer)
 void BoardController::handleEvents(SDL_Event &event)
 {
     m_view->handleEvents(event);
+    // TODO: Handle reset and pause events here
+//    if (event.user.data1 == (void*)CustomEvent::RESET)
+//    {
+//        printf("It's a reset! User data1 of this event is: %d\n", event.user.data1);
+//    }
 }
 
 void BoardController::update()

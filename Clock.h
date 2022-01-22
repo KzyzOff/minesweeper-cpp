@@ -5,6 +5,8 @@
 
 #include "header.h"
 
+// TODO: Clock should remember it's duration when stop() is called, and start from that duration when start() is called
+
 class Clock
 {
 public:

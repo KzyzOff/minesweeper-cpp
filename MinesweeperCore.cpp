@@ -2,7 +2,8 @@
 #include "MinesweeperCore.h"
 
 MinesweeperCore::MinesweeperCore(int x, int y, GameDifficulty difficulty)
-: m_difficulty(difficulty),
+: m_game_state(GameState::RUNNING),
+  m_difficulty(difficulty),
   m_first_move(true),
   m_x(x),
   m_y(y),
@@ -100,7 +101,10 @@ bool MinesweeperCore::isOutside(int x, int y) const
 
 void MinesweeperCore::reveal(int x, int y)
 {
-	if (m_game_state == GameState::FINISHED_LOSS || m_game_state == GameState::FINISHED_WIN) return;
+	if (   m_game_state == GameState::FINISHED_LOSS
+        || m_game_state == GameState::FINISHED_WIN
+        || m_game_state == GameState::PAUSE)
+        return;
 	if (isOutside(x, y)) return;
 	if (m_board.at(x).at(y).state == CellState::REVEALED || m_board.at(x).at(y).state == CellState::REVEALED) return;
 
@@ -130,7 +134,10 @@ void MinesweeperCore::reveal(int x, int y)
 
 void MinesweeperCore::toggle_flag(int x, int y)
 {
-	if (m_game_state == GameState::FINISHED_LOSS || m_game_state == GameState::FINISHED_WIN) return;
+	if (   m_game_state == GameState::FINISHED_LOSS
+        || m_game_state == GameState::FINISHED_WIN
+        || m_game_state == GameState::PAUSE)
+        return;
 	if (isOutside(x, y)) return;
 	if (m_board.at(x).at(y).state == CellState::REVEALED) return;
 
@@ -138,6 +145,21 @@ void MinesweeperCore::toggle_flag(int x, int y)
 		m_board.at(x).at(y).state = CellState::UNREVEALED;
 	else
 		m_board.at(x).at(y).state = CellState::FLAG;
+}
+
+void MinesweeperCore::togglePause()
+{
+    if (m_game_state == GameState::FINISHED_LOSS || m_game_state == GameState::FINISHED_WIN) return;
+    if (m_game_state == GameState::PAUSE)
+    {
+        m_game_state = GameState::RUNNING;
+        m_clock->start();
+    }
+    else
+    {
+        m_game_state = GameState::PAUSE;
+        m_clock->stop();
+    }
 }
 
 int MinesweeperCore::countMines(int x, int y) const

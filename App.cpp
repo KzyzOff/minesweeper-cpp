@@ -95,11 +95,7 @@ void App::handleEvents()
             m_current = initBoard(GameDifficulty::HARD);
             break;
         }
-        if (event.user.data1 == (void*)CustomEvent::RESET)
-        {
-//            resetBoard();
-            printf("It's a reset! User data1 of this event is: %d\n", event.user.data1);
-        }
+        /* PAUSE EVENT HANDLING */
     }
 }
 
