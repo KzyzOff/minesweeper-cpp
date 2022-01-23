@@ -22,7 +22,7 @@ public:
     void update() override;
 
     void setBoard(int x, int y, GameDifficulty diff);
-    void setView();
+    void setView(MinesweeperCore* core, FontManager* font_mgr);
 
 private:
     std::shared_ptr<FontManager> m_font_mgr;

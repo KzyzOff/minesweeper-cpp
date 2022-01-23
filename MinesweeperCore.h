@@ -29,6 +29,7 @@ public:
 	MinesweeperCore(int x, int y, GameDifficulty difficulty);
 
     void init();
+    void reset();
 
     void reveal(int x, int y);
     void toggle_flag(int x, int y);

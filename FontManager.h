@@ -5,6 +5,7 @@
 
 #include "header.h"
 #include <string>
+//#include <memory>
 
 #include "common.h"
 
@@ -20,8 +21,8 @@ public:
     int getSize() const { return m_size; };
 
 private:
-	int m_size;
-	TTF_Font* m_font;
+    TTF_Font* m_font;
+    int m_size;
 	SDL_Color m_color;
 
 };

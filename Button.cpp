@@ -1,8 +1,10 @@
 
 #include "Button.h"
 
-Button::Button(FontManager* font_mgr)
-: m_font_mgr(font_mgr),
+#include <utility>
+
+Button::Button(std::shared_ptr<FontManager> font_mgr)
+: m_font_mgr(std::move(font_mgr)),
   m_text(),
   m_text_pos({ 5, 5 }),
   m_text_size(5),

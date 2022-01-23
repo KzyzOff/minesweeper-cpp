@@ -4,18 +4,23 @@
 BoardView::BoardView(MinesweeperCore* core, FontManager* font_mgr)
 : m_core(core),
   m_font_mgr(font_mgr),
-  m_reset_button(m_font_mgr.get()),
-  m_pause_button(m_font_mgr.get()),
+  m_reset_button(m_font_mgr),
+  m_pause_button(m_font_mgr),
   m_gap(1),
   m_offset(0),
   m_lb_flag(false),
   m_rb_flag(false)
 {
-	setBoardSizing();
-	setCells();
-	int font_size = m_cell_size - m_cell_size / 10;
-	m_offset = (m_cell_size - font_size) / 2;
-	m_font_mgr->setSize(font_size);
+	init();
+}
+
+void BoardView::init()
+{
+    setBoardSizing();
+    setCells();
+    int font_size = m_cell_size - m_cell_size / 10;
+    m_offset = (m_cell_size - font_size) / 2;
+    m_font_mgr->setSize(font_size);
     setResetButton();
     setPauseButton();
 }
@@ -82,8 +87,10 @@ void BoardView::setResetButton()
 void BoardView::setPauseButton()
 {
     m_pause_button.setRect({
-        m_reset_button.getRect().x, m_reset_button.getRect().y + m_reset_button.getRect().h + m_offset,
-        m_reset_button.getRect().w, m_reset_button.getRect().h
+        m_reset_button.getRect().x,
+        m_reset_button.getRect().y + m_reset_button.getRect().h + m_reset_button.getRect().h / 2,
+        m_reset_button.getRect().w,
+        m_reset_button.getRect().h
     });
     m_pause_button.setOutlineColor(Color::white);
     m_pause_button.setTextColor(Color::black);
@@ -230,25 +237,15 @@ void BoardView::handleEvents(SDL_Event &event)
 	}
     if (event.button.button == SDL_BUTTON_LEFT)
     {
-        if (event.type == SDL_MOUSEBUTTONDOWN && !m_lb_flag && m_reset_button.isActive())
+        if (event.type == SDL_MOUSEBUTTONDOWN && !m_lb_flag)
         {
+            if (m_reset_button.isActive())
+                m_reset_button.onEvent();
+
+            if (m_pause_button.isActive())
+                m_pause_button.onEvent();
+
             m_rb_flag = true;
-            m_reset_button.onEvent();
-            return;
-        }
-        if (event.type == SDL_MOUSEBUTTONUP && m_rb_flag)
-        {
-            m_rb_flag = false;
-            return;
-        }
-    }
-    if (event.button.button == SDL_BUTTON_LEFT)
-    {
-        if (event.type == SDL_MOUSEBUTTONDOWN && !m_lb_flag && m_pause_button.isActive())
-        {
-            m_rb_flag = true;
-            m_pause_button.onEvent();
-            return;
         }
         if (event.type == SDL_MOUSEBUTTONUP && m_rb_flag)
         {

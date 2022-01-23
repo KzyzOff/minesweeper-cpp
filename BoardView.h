@@ -14,9 +14,6 @@
 #include "common.h"
 #include "CONSTANTS.h"
 
-// TODO: Add pause button
-// TODO: ## NEED REPAIR - board view is broken after a reset
-
 struct CellView
 {
 	std::shared_ptr<const CoreCell> cc;
@@ -30,7 +27,8 @@ class BoardView
 {
 public:
 	BoardView(MinesweeperCore* core, FontManager* font_mgr);
-	~BoardView() = default;
+
+    void init();
 
 	void update();
 	void draw(SDL_Renderer *renderer);

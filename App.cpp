@@ -111,5 +111,5 @@ void App::render()
 
 std::unique_ptr<Controller> App::initBoard(GameDifficulty diff)
 {
-    return std::make_unique<BoardController>(10, 10, diff, m_fm.get());
+    return std::make_unique<BoardController>(2, 2, diff, m_fm.get());
 }

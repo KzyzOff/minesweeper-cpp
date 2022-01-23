@@ -7,7 +7,7 @@ BoardController::BoardController(int x, int y, GameDifficulty diff, FontManager*
   m_view(nullptr)
 {
     setBoard(x, y, diff);
-    setView();
+    setView(m_core.get(), font_mgr);
 }
 
 void BoardController::draw(SDL_Renderer *renderer)
@@ -21,11 +21,10 @@ void BoardController::handleEvents(SDL_Event &event)
 
     if (event.user.data1 == (void*)CustomEvent::RESET)
     {
-        m_core->init();
+        m_core->reset();
         printf("It's a reset!\n");
     }
 
-    // TODO: Pause button event handling
     if (event.user.data1 == (void*)CustomEvent::PAUSE)
     {
         m_core->togglePause();
@@ -43,8 +42,7 @@ void BoardController::setBoard(int x, int y, GameDifficulty diff)
     m_core = std::make_shared<MinesweeperCore>(x, y, diff);
 }
 
-void BoardController::setView()
+void BoardController::setView(MinesweeperCore* core, FontManager* font_mgr)
 {
-    if (m_core == nullptr) return;
-    m_view = std::make_shared<BoardView>(m_core.get(), m_font_mgr.get());
+    m_view = std::make_shared<BoardView>(core, font_mgr);
 }

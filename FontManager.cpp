@@ -2,12 +2,14 @@
 #include "FontManager.h"
 
 FontManager::FontManager(const std::string &file)
-: m_size(80),
+: m_font(nullptr),
+  m_size(80),
   m_color({255, 255, 255, 255})
 {
 	if (TTF_Init() != -1)
 	{
 		m_font = TTF_OpenFont(file.c_str(), m_size);
+        printf("Font loaded successfully!\n");
 	}
 }
 

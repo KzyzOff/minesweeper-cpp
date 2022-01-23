@@ -29,6 +29,24 @@ void MinesweeperCore::init()
 	m_mine_count = int(float(m_x * m_y) * static_cast<float>(m_difficulty) / 100.f);
 }
 
+void MinesweeperCore::reset()
+{
+    for (auto& col : m_board)
+    {
+        for (size_t y = 0; y < (size_t)m_y; y++)
+        {
+            col.at(y).state = CellState::UNREVEALED;
+            col.at(y).mine = false;
+            col.at(y).visited = false;
+            col.at(y).mine_count = 0;
+        }
+    }
+    m_first_move = true;
+    m_clock->init();
+    m_game_state = GameState::RUNNING;
+    m_mine_count = m_mine_count = int(float(m_x * m_y) * static_cast<float>(m_difficulty) / 100.f);
+}
+
 void MinesweeperCore::updateState()
 {
 	int unrevealed = m_board_size - m_mine_count;

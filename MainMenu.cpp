@@ -79,7 +79,7 @@ void MainMenu::setButtonsSizing()
     int tlc_x = WINDOW_WIDTH / 2 - size.x / 2;
     for (int i = 0; i < 4; i++)
     {
-        Button b(m_font_mgr.get());
+        Button b(m_font_mgr);
         b.setRect({tlc_x, win_offset, size.x, size.y});
         b.setOutlineColor(Color::white);
         b.setTextColor(Color::black);
