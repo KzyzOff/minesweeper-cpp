@@ -34,6 +34,7 @@ public:
     void setColor(SDL_Color color) { m_color = color; };
     void setOutlineColor(SDL_Color color) { m_outline_color = color; };
     void setTextColor(SDL_Color color) { m_text_color = color; };
+    void centerText();
 
     bool intersects(const Vec2i& p) const;
     SDL_Rect getRect() const { return m_rect; };

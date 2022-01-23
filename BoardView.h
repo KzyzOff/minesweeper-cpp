@@ -39,14 +39,16 @@ public:
 private:
 	void setBoardSizing();
 	void setCells();
-    void setResetButton();
-    void setPauseButton();
+    void setBoardButtons();
+    void setResetButton(Vec2i size);
+    void setPauseButton(Vec2i size);
 	void updateMouse();
     void updateClock();
     void updateButtons();
 	void drawClock(SDL_Renderer* renderer);
 	void drawCell(SDL_Renderer* renderer, CellView &cv);
     void drawButtons(SDL_Renderer* renderer);
+    void drawBlur(SDL_Renderer* renderer);
 	static void setRenderColor(SDL_Renderer* renderer, SDL_Color color);
 
 	Vec2i x2xy(int x) const;
@@ -56,6 +58,7 @@ private:
 	std::vector<CellView> m_cells;
     Button m_reset_button;
     Button m_pause_button;
+    int m_btn_font_size;
 	int m_cell_size;
 	Vec2i m_tlc;
 	Vec2i m_board_size;

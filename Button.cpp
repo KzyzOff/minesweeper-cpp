@@ -18,6 +18,12 @@ Button::Button(std::shared_ptr<FontManager> font_mgr)
 
 }
 
+void Button::centerText()
+{
+    m_text_pos.x = m_rect.x + m_rect.w / 2 - (int)m_text.size() * m_text_size / 2;
+    m_text_pos.y = m_rect.y + m_rect.h / 2 - m_text_size / 2;
+}
+
 void Button::draw(SDL_Renderer* renderer)
 {
     drawRect(renderer);

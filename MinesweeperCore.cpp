@@ -146,15 +146,15 @@ void MinesweeperCore::toggle_flag(int x, int y)
 void MinesweeperCore::togglePause()
 {
     if (m_game_state == GameState::FINISHED_LOSS || m_game_state == GameState::FINISHED_WIN) return;
-    if (m_game_state == GameState::PAUSE)
-    {
-        m_game_state = GameState::RUNNING;
-        m_clock->start();
-    }
-    else
+    if (m_game_state == GameState::RUNNING && !m_first_move)
     {
         m_game_state = GameState::PAUSE;
         m_clock->stop();
+    }
+    else if (m_game_state == GameState::PAUSE)
+    {
+        m_game_state = GameState::RUNNING;
+        m_clock->start();
     }
 }
 

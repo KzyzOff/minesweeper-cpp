@@ -93,10 +93,7 @@ void MainMenu::centerTextOnButtons()
 {
     for (auto& b : m_buttons)
     {
-        b.setTextPos({
-            b.getRect().x + b.getRect().w / 2 - (int)b.getText().size() * b.getFontSize() / 2,
-            b.getRect().y + b.getRect().h / 2 - b.getFontSize() / 2
-        });
+        b.centerText();
     }
 }
 

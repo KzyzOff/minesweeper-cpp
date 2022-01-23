@@ -6,6 +6,7 @@ BoardView::BoardView(MinesweeperCore* core, FontManager* font_mgr)
   m_font_mgr(font_mgr),
   m_reset_button(m_font_mgr),
   m_pause_button(m_font_mgr),
+  m_btn_font_size(10),
   m_gap(1),
   m_offset(0),
   m_lb_flag(false),
@@ -21,8 +22,7 @@ void BoardView::init()
     int font_size = m_cell_size - m_cell_size / 10;
     m_offset = (m_cell_size - font_size) / 2;
     m_font_mgr->setSize(font_size);
-    setResetButton();
-    setPauseButton();
+    setBoardButtons();
 }
 
 void BoardView::setBoardSizing()
@@ -58,21 +58,29 @@ void BoardView::setCells()
 	printf("Initialized cell vector successfully!\n");
 }
 
-void BoardView::setResetButton()
+void BoardView::setBoardButtons()
+{
+    Vec2i btn_size {
+        m_clock_size.x - 10,
+        m_clock_size.y
+    };
+    m_btn_font_size = btn_size.x / (int)strlen("Resume");
+    setResetButton(btn_size);
+    setPauseButton(btn_size);
+}
+
+void BoardView::setResetButton(Vec2i size)
 {
     m_reset_button.setRect({
         WINDOW_WIDTH - m_clock_size.x, m_clock_pos.y,
-        m_clock_size.x - 10, m_clock_size.y
+        size.x, size.y
     });
     m_reset_button.setOutlineColor(Color::white);
     m_reset_button.setTextColor(Color::black);
     m_reset_button.setText("Reset");
     m_reset_button.setColor(Color::red);
-    m_reset_button.setTextSize(m_reset_button.getRect().w / (int)m_reset_button.getText().size());
-    m_reset_button.setTextPos({
-        m_reset_button.getRect().x,
-        m_reset_button.getRect().y + m_reset_button.getRect().h / 2 - m_reset_button.getFontSize() / 2
-    });
+    m_reset_button.setTextSize(m_btn_font_size);
+    m_reset_button.centerText();
     Uint32 ev_num = SDL_RegisterEvents(1);
     if (ev_num != (Uint32) - 1)
     {
@@ -84,23 +92,20 @@ void BoardView::setResetButton()
     }
 }
 
-void BoardView::setPauseButton()
+void BoardView::setPauseButton(Vec2i size)
 {
     m_pause_button.setRect({
         m_reset_button.getRect().x,
-        m_reset_button.getRect().y + m_reset_button.getRect().h + m_reset_button.getRect().h / 2,
-        m_reset_button.getRect().w,
-        m_reset_button.getRect().h
+        m_reset_button.getRect().y + int(size.y * 1.5),
+        size.x,
+        size.y
     });
     m_pause_button.setOutlineColor(Color::white);
     m_pause_button.setTextColor(Color::black);
     m_pause_button.setText("Pause");
     m_pause_button.setColor(Color::light_blue);
-    m_pause_button.setTextSize(m_pause_button.getRect().w / (int)m_pause_button.getText().size());
-    m_pause_button.setTextPos({
-        m_pause_button.getRect().x,
-        m_pause_button.getRect().y + m_pause_button.getRect().h / 2 - m_pause_button.getFontSize() / 2
-    });
+    m_pause_button.setTextSize(m_btn_font_size);
+    m_pause_button.centerText();
     Uint32 ev_num = SDL_RegisterEvents(1);
     if (ev_num != (Uint32) - 1)
     {
@@ -126,6 +131,18 @@ void BoardView::updateClock()
 void BoardView::updateButtons()
 {
     m_reset_button.update(m_mouse);
+    if (m_core->getGameState() == GameState::PAUSE)
+    {
+        m_pause_button.setColor(Color::orange);
+        m_pause_button.setText("Resume");
+        m_pause_button.centerText();
+    }
+    else
+    {
+        m_pause_button.setColor(Color::light_blue);
+        m_pause_button.setText("Pause");
+        m_pause_button.centerText();
+    }
     m_pause_button.update(m_mouse);
 }
 
@@ -142,7 +159,13 @@ void BoardView::draw(SDL_Renderer *renderer)
 	{
 		drawCell(renderer, const_cast<CellView &>(cell));
 	}
-	drawClock(renderer);
+    if (m_core->getGameState() == GameState::PAUSE)
+    {
+        if ((SDL_GetTicks64() / 1000) % 2 == 0)
+            drawClock(renderer);
+    }
+    else
+        drawClock(renderer);
     drawButtons(renderer);
 }
 

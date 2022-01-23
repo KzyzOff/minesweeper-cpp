@@ -91,11 +91,10 @@ void App::handleEvents()
         }
         if (event.user.data1 == (void*)GameDifficulty::HARD)
         {
-            printf("Initializing HARD board. Event user data = %d\n", event.user.data1);
+            printf("Initializing HARD board.\n");
             m_current = initBoard(GameDifficulty::HARD);
             break;
         }
-        /* PAUSE EVENT HANDLING */
     }
 }
 
@@ -111,5 +110,5 @@ void App::render()
 
 std::unique_ptr<Controller> App::initBoard(GameDifficulty diff)
 {
-    return std::make_unique<BoardController>(2, 2, diff, m_fm.get());
+    return std::make_unique<BoardController>(12, 12, diff, m_fm.get());
 }
