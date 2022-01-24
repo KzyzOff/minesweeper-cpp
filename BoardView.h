@@ -23,6 +23,14 @@ struct CellView
 	bool intersects(Vec2i mouse) const;
 };
 
+struct EndScreen
+{
+    SDL_Rect rect;
+    int font_size;
+    Vec2i text_pos;
+    EndScreen(SDL_Rect r, int font_size, Vec2i text_pos) : rect(r), font_size(font_size), text_pos(text_pos) {}
+};
+
 class BoardView
 {
 public:
@@ -48,7 +56,6 @@ private:
 	void drawClock(SDL_Renderer* renderer);
 	void drawCell(SDL_Renderer* renderer, CellView &cv);
     void drawButtons(SDL_Renderer* renderer);
-    void drawBlur(SDL_Renderer* renderer);
 	static void setRenderColor(SDL_Renderer* renderer, SDL_Color color);
 
 	Vec2i x2xy(int x) const;

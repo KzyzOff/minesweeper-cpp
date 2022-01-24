@@ -1,8 +1,6 @@
 
 # minesweeper-cpp
 
-***
-
 Simple minesweeper game written in **C++/SDL2**. \
 **SDL2** modules used:
 - **SDL2_ttf**,

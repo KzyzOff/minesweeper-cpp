@@ -7,7 +7,7 @@ BoardController::BoardController(int x, int y, GameDifficulty diff, FontManager*
   m_view(nullptr)
 {
     setBoard(x, y, diff);
-    setView(m_core.get(), font_mgr);
+    setView(m_core.get(), m_font_mgr.get());
 }
 
 void BoardController::draw(SDL_Renderer *renderer)
@@ -28,7 +28,7 @@ void BoardController::handleEvents(SDL_Event &event)
     if (event.user.data1 == (void*)CustomEvent::PAUSE)
     {
         m_core->togglePause();
-        printf("PAUSE!\n");
+        printf("It's a pause!\n");
     }
 }
 

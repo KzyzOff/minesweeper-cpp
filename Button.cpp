@@ -14,9 +14,7 @@ Button::Button(std::shared_ptr<FontManager> font_mgr)
   m_text_color(Color::black),
   m_event(),
   m_active(false)
-{
-
-}
+{}
 
 void Button::centerText()
 {
@@ -38,7 +36,9 @@ void Button::drawRect(SDL_Renderer *renderer)
     {
         SDL_SetRenderDrawColor(renderer, m_outline_color.r, m_outline_color.g,
                                m_outline_color.b, m_outline_color.a);
+        SDL_Rect r{m_rect.x - 1, m_rect.y - 1, m_rect.w + 2, m_rect.h + 2};
         SDL_RenderDrawRect(renderer, &m_rect);
+        SDL_RenderDrawRect(renderer, &r);
     }
 }
 

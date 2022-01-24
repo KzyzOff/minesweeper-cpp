@@ -15,6 +15,8 @@
 #include "BoardView.h"
 #include "FontManager.h"
 
+// TODO: Add EndScreen class with exit button, game result and time spent to achieve win
+
 class App
 {
 public:
