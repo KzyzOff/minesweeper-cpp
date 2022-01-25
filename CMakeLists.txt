@@ -15,8 +15,11 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 
-add_executable(${PROJECT_NAME} main.cpp
-        header.h
+add_library(myLib "")
+add_subdirectory(src)
+
+add_executable(${PROJECT_NAME})#main.cpp
+        #[[header.h
         CONSTANTS.h
         Color.h
         common.h
@@ -28,6 +31,6 @@ add_executable(${PROJECT_NAME} main.cpp
         Controller.h
         BoardController.cpp BoardController.h
         Button.h Button.cpp
-        MainMenu.cpp MainMenu.h)
+        MainMenu.cpp MainMenu.h)]]
 
-target_link_libraries(${PROJECT_NAME} SDL2::Main SDL2::Image SDL2::TTF)
+target_link_libraries(${PROJECT_NAME} myLib SDL2::Main SDL2::Image SDL2::TTF)
