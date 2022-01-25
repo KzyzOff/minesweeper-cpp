@@ -15,19 +15,24 @@ Unexpected errors may occur during use.
 ## Build prerequisites
 
 On _GNU/Linux_ systems open terminal and install the **sdl2**, **sdl2_image**,
-**sdl2_ttf** packages by using the package manager used by your system. \
-For example when you're using **Debian** (or **Ubuntu**): \
-`$ apt-get install sdl2 sdl2_image sdl2_ttf`
+**sdl2_ttf** packages by using package manager on your system. For example
+when you're using **Debian** (or **Ubuntu**):
+
+```bash
+$ apt-get install sdl2 sdl2_image sdl2_ttf
+```
 
 ***
 
 ## Build and play the game
 
-`$ mkdir build` \
-`$ cd build` \
-`$ cmake ..` \
-`$ make` \
-`$ ./Minesweeper` \
+```bash
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+$ ./Minesweeper
+```
 
 Enjoy :) \
 K. D.
